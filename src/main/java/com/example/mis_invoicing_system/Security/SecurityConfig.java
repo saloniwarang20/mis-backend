@@ -1,6 +1,7 @@
 package com.example.mis_invoicing_system.Security;
 
 import io.jsonwebtoken.Jwt;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +18,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Collections;
 import java.util.List;
 
 @Configuration
@@ -60,16 +62,14 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
+    @Value("${frontend_url}")
+    private String frontendUrl;
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(
-                List.of(
-                        "https://mis-frontend-eight.vercel.app",
-                        "http://localhost:5173")
-
-        );
+        configuration.setAllowedOrigins(Collections.singletonList(frontendUrl));
 
         configuration.setAllowedMethods(
                 List.of("*")
