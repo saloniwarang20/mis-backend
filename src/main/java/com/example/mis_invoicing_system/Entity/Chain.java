@@ -45,4 +45,8 @@ public class Chain {
     @OneToMany(mappedBy = "chain")
     @JsonManagedReference
     private List<Brand> brand;
+
+    @OneToMany(mappedBy = "chain")
+    @JsonManagedReference
+    private List<Invoice> invoiceList;
 }

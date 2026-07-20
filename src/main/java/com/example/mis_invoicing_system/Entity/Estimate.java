@@ -1,13 +1,16 @@
 package com.example.mis_invoicing_system.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="estimate")
@@ -31,7 +34,7 @@ public class Estimate {
     private Double totalCost;
 
     @Column(name="delivery_date")
-    private Date deliveryDate;
+    private LocalDate deliveryDate;
 
     @Column(name="delivery_details")
     private String deliveryDetails;
@@ -49,6 +52,10 @@ public class Estimate {
     @JoinColumn(name="zone_id", nullable = false)
     @JsonBackReference
     private Zone zone;
+
+    @OneToMany(mappedBy = "estimate")
+    @JsonManagedReference
+    private List<Invoice> invoiceList;
 
 
 }
